@@ -11,6 +11,7 @@ import {
   Layers
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getSectorRisk } from "@/lib/api";
 
 interface SectorRisk {
   sector: string;
@@ -26,10 +27,13 @@ export default function SectorRiskHeatmap() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/dashboard/sector-risk-heatmap")
-      .then(res => res.json())
+    getSectorRisk()
       .then(data => {
         setData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch sector risk:", err);
         setLoading(false);
       });
   }, []);

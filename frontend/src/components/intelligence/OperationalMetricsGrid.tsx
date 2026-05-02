@@ -10,6 +10,7 @@ import {
   ArrowUpRight
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getOperationalMetrics } from "@/lib/api";
 
 interface MetricItem {
   value: number;
@@ -32,11 +33,13 @@ export default function OperationalMetricsGrid() {
 
   useEffect(() => {
     const fetchMetrics = () => {
-      fetch("http://localhost:8000/api/v1/dashboard/operational-metrics")
-        .then(res => res.json())
+      getOperationalMetrics()
         .then(data => {
           setMetrics(data);
           setLoading(false);
+        })
+        .catch(err => {
+          console.error("Failed to fetch metrics:", err);
         });
     };
     fetchMetrics();

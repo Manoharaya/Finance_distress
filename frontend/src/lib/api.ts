@@ -47,6 +47,41 @@ export const getIntelligenceFeed = async () => {
   return response.data;
 };
 
+export const getExecutiveBriefing = async () => {
+  const response = await api.get("/dashboard/executive-briefing");
+  return response.data;
+};
+
+export const getSectorRisk = async () => {
+  const response = await api.get("/dashboard/sector-risk-heatmap");
+  return response.data;
+};
+
+export const getOperationalMetrics = async () => {
+  const response = await api.get("/dashboard/operational-metrics");
+  return response.data;
+};
+
+export const getDistressMomentum = async () => {
+  const response = await api.get("/dashboard/momentum");
+  return response.data;
+};
+
+export const getCompanyMomentum = async (id: number) => {
+  const response = await api.get(`/companies/${id}/momentum`);
+  return response.data;
+};
+
+export const getCompanyRecommendation = async (id: number) => {
+  const response = await api.get(`/companies/${id}/recommendation`);
+  return response.data;
+};
+
+export const searchIntelligence = async (query: string) => {
+  const response = await api.get(`/search?q=${query}`);
+  return response.data;
+};
+
 export const getSystemStatus = async () => {
   const response = await api.get("/system/status");
   return response.data;

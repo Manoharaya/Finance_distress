@@ -9,6 +9,7 @@ import {
   Activity
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getCompanyMomentum } from "@/lib/api";
 
 interface Momentum {
   momentum: number;
@@ -24,10 +25,13 @@ export default function DistressMomentumCard({ companyId }: { companyId: number 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/v1/companies/${companyId}/momentum`)
-      .then(res => res.json())
+    getCompanyMomentum(companyId)
       .then(data => {
         setData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch momentum:", err);
         setLoading(false);
       });
   }, [companyId]);

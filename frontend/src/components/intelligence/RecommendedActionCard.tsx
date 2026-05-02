@@ -11,6 +11,7 @@ import {
   Clock
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getCompanyRecommendation } from "@/lib/api";
 
 interface Recommendation {
   score: number;
@@ -27,10 +28,13 @@ export default function RecommendedActionCard({ companyId }: { companyId: number
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/v1/companies/${companyId}/recommendation`)
-      .then(res => res.json())
+    getCompanyRecommendation(companyId)
       .then(data => {
         setRec(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch recommendation:", err);
         setLoading(false);
       });
   }, [companyId]);

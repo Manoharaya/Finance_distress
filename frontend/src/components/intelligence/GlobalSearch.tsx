@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import EmptyStateIntelligence from "@/components/intelligence/EmptyStateIntelligence";
+import { searchIntelligence } from "@/lib/api";
 
 export default function GlobalSearch() {
   const [query, setQuery] = useState("");
@@ -33,8 +34,7 @@ export default function GlobalSearch() {
     const delayDebounce = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/search?q=${query}`);
-        const data = await res.json();
+        const data = await searchIntelligence(query);
         setResults(data);
         setIsOpen(true);
       } catch (err) {

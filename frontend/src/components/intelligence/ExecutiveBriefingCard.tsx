@@ -10,6 +10,7 @@ import {
   Zap
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { getExecutiveBriefing } from "@/lib/api";
 
 interface Briefing {
   title: string;
@@ -24,10 +25,13 @@ export default function ExecutiveBriefingCard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/dashboard/executive-briefing")
-      .then(res => res.json())
+    getExecutiveBriefing()
       .then(data => {
         setData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch executive briefing:", err);
         setLoading(false);
       });
   }, []);
