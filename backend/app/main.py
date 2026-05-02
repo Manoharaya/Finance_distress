@@ -13,7 +13,11 @@ from app.core.middleware import LoggingMiddleware
 logger = structlog.get_logger()
 
 # Create tables (for development, normally use Alembic)
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
+    logger.info("Database tables verified/created successfully.")
+except Exception as e:
+    logger.error(f"Failed to initialize database: {str(e)}")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
