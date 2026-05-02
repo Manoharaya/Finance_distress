@@ -1,0 +1,24 @@
+{
+  "pythonVersion": "3.12",
+  "venvPath": ".",
+  "venv": "backend/venv",
+  "extraPaths": [
+    "./backend",
+    "./scrapers",
+    "."
+  ],
+  "include": [
+    "backend",
+    "scrapers",
+    "workers",
+    "shared"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "backend/venv"
+  ],
+  "typeCheckingMode": "basic",
+  "reportMissingImports": true,
+  "reportMissingModuleSource": true
+}
