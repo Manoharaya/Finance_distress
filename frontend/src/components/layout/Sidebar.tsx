@@ -1,7 +1,11 @@
+"use client"
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, Building2, AlertTriangle, Settings, BarChart3, Users, ShieldCheck, Terminal } from 'lucide-react';
 
 const Sidebar = () => {
+  const pathname = usePathname();
+
   return (
     <div className="w-64 bg-slate-950 text-white h-screen fixed left-0 top-0 flex flex-col border-r border-border shadow-[20px_0_40px_rgba(0,0,0,0.3)] z-50">
       <div className="p-8 border-b border-border bg-slate-900/20">
@@ -17,15 +21,15 @@ const Sidebar = () => {
       <nav className="flex-1 p-6 space-y-4 mt-6">
         <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] px-4">Operations</p>
         <div className="space-y-1">
-          <NavItem icon={<Home size={18} />} label="Overview" href="/" />
-          <NavItem icon={<AlertTriangle size={18} />} label="Priority Leads" href="/leads" active />
-          <NavItem icon={<Building2 size={18} />} label="Entity Registry" href="/companies" />
+          <NavItem icon={<Home size={18} />} label="Overview" href="/" active={pathname === "/"} />
+          <NavItem icon={<AlertTriangle size={18} />} label="Priority Leads" href="/leads" active={pathname === "/leads" || pathname.startsWith("/companies/")} />
+          <NavItem icon={<Building2 size={18} />} label="Entity Registry" href="/companies" active={pathname === "/companies"} />
         </div>
 
         <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] px-4 mt-10">Analysis</p>
         <div className="space-y-1">
-          <NavItem icon={<Users size={18} />} label="Network Map" href="/directors" />
-          <NavItem icon={<BarChart3 size={18} />} label="Sector Risk" href="/analytics" />
+          <NavItem icon={<Users size={18} />} label="Network Map" href="/directors" active={pathname === "/directors"} />
+          <NavItem icon={<BarChart3 size={18} />} label="Sector Risk" href="/analytics" active={pathname === "/analytics"} />
         </div>
       </nav>
       
@@ -34,7 +38,7 @@ const Sidebar = () => {
            <Terminal size={14} className="text-emerald-400" />
            <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">System Online</span>
         </div>
-        <NavItem icon={<Settings size={18} />} label="Configuration" href="/settings" />
+        <NavItem icon={<Settings size={18} />} label="Configuration" href="/settings" active={pathname === "/settings"} />
       </div>
     </div>
   );
