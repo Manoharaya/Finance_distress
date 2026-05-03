@@ -2,7 +2,7 @@
     email manoharaya03@gmail.com
 }
 
-demo.codexneural.com {
+http://demo.codexneural.com:8080 {
     # Reverse proxy for Backend API
     reverse_proxy /api/* backend:8000
 
