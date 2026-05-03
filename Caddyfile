@@ -2,10 +2,7 @@
     email manoharaya03@gmail.com
 }
 
-demo.codexneural.com:8443 {
-    # Internal SSL (Self-signed)
-    tls internal
-
+demo.codexneural.com {
     # Reverse proxy for Backend API
     reverse_proxy /api/* backend:8000
 
