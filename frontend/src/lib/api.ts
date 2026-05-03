@@ -1,10 +1,23 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+  const base = process.env.NEXT_PUBLIC_API_URL || '/_/backend/api/v1';
+  return base.endsWith('/') ? base : base + '/';
+};
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || '/_/backend/api/v1',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+// Request interceptor to ensure all paths are relative to the baseURL
+api.interceptors.request.use((config) => {
+  if (config.url && config.url.startsWith('/')) {
+    config.url = config.url.substring(1);
+  }
+  return config;
 });
 
 export const getDashboardSummary = async () => {
