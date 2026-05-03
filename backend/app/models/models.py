@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, JSON, Table, Index, Boolean
-from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.db import Base
@@ -61,8 +60,8 @@ class DistressEvent(Base):
     status = Column(String)
     confidence_score = Column(Integer, default=100)
     recommendation = Column(Text)
-    metadata_json = Column(JSONB) # Renamed from metadata to avoid conflict with Base.metadata
-    raw_data = Column(JSONB)
+    metadata_json = Column(JSON) # Renamed from metadata to avoid conflict with Base.metadata
+    raw_data = Column(JSON)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
