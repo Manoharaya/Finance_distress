@@ -37,7 +37,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3004:3000"
+      - "3003:3000"
     env_file:
       - .env
     environment:
