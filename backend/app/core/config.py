@@ -11,7 +11,17 @@ class Settings(BaseSettings):
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "NewPassword123"
     POSTGRES_DB: str = "distress_db"
-    DATABASE_URL: str = "postgresql://postgres:NewPassword123@localhost:5432/distress_db"
+    DATABASE_URL: Optional[str] = None
+
+    def get_database_url(self) -> str:
+        if self.DATABASE_URL:
+            # SQLAlchemy 1.4+ requires postgresql:// instead of postgres://
+            if self.DATABASE_URL.startswith("postgres://"):
+                return self.DATABASE_URL.replace("postgres://", "postgresql://", 1)
+            return self.DATABASE_URL
+        
+        # Fallback to components if DATABASE_URL is not set
+        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}/{self.POSTGRES_DB}"
     
     # Redis & Celery
     REDIS_HOST: str = "localhost"

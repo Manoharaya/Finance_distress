@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from typing import List
 import structlog
 
@@ -35,8 +36,28 @@ app.add_middleware(
 )
 
 @app.get("/health")
-def health_check():
-    return {"status": "healthy", "version": "1.0.0"}
+def health_check(db: Session = Depends(get_db)):
+    try:
+        # Test DB connection
+        db.execute(text("SELECT 1"))
+        db_status = "connected"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+    
+    # Get masked DB host for debugging
+    db_url = settings.DATABASE_URL
+    db_host = "unknown"
+    if "@" in db_url:
+        db_host = db_url.split("@")[1].split("/")[0]
+    
+    return {
+        "status": "healthy",
+        "version": "1.0.0",
+        "database": {
+            "status": db_status,
+            "host": db_host
+        }
+    }
 
 # Include routers
 app.include_router(companies.router, prefix="/api/v1/companies", tags=["companies"])
