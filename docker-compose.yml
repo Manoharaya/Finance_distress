@@ -33,9 +33,6 @@ services:
   frontend:
     build: ./frontend
     container_name: distress_frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
       - "3010:3000"
     env_file:
