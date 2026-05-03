@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getBaseURL = () => {
-  const base = process.env.NEXT_PUBLIC_API_URL || '/_/backend/api/v1';
+  const base = process.env.NEXT_PUBLIC_API_URL || '/api/v1';
   return base.endsWith('/') ? base : base + '/';
 };
 
