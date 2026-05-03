@@ -36,5 +36,5 @@ COPY .env .env
 # Expose ports
 EXPOSE 8000 3000
 
-# Start everything
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Run migrations and start everything via supervisor
+CMD sh -c "cd /app/backend && alembic upgrade head && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"
