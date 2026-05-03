@@ -1,0 +1,14 @@
+{
+    email manoharaya03@gmail.com
+}
+
+demo.codexneural.com {
+    # Reverse proxy for Backend API
+    reverse_proxy /api/* backend:8000
+
+    # Reverse proxy for Frontend
+    reverse_proxy * frontend:3000
+
+    # Enable compression
+    encode gzip
+}
