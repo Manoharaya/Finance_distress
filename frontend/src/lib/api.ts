@@ -17,6 +17,7 @@ api.interceptors.request.use((config) => {
   if (config.url && config.url.startsWith('/')) {
     config.url = config.url.substring(1);
   }
+  console.log("Axios Request:", config.baseURL, config.url);
   return config;
 });
 
